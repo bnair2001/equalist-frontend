@@ -26,6 +26,9 @@ dependencies:
   fluro: ^1.7.8
   flutter_web_plugins:
     sdk: flutter
+  url_launcher: ^5.7.10
+  shared_preferences: ^0.5.12+4
+  google_fonts: ^1.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
