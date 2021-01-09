@@ -1,3 +1,4 @@
+import 'package:equalist/colors.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,8 +34,90 @@ class _VerifyState extends State<Verify> {
 
   @override
   Widget build(BuildContext context) {
+    BoxDecoration myBoxDecoration() {
+      return BoxDecoration(
+        border: Border.all(
+          width: 4,
+          color: EqualistColors.darkGreen,
+        ),
+      );
+    }
+
+    Widget inTheBox() {
+      return Container(
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(70.0),
+        decoration: myBoxDecoration(), //       <--- BoxDecoration here
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Create",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.pressStart2p(
+                fontSize: EqualistColors.bannerFontSize,
+                color: EqualistColors.lightGreen,
+              ),
+            ),
+            SizedBox(
+              height: EqualistColors.heightBtwBannerWords,
+            ),
+            Text(
+              "Collaborative",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.pressStart2p(
+                fontSize: EqualistColors.bannerFontSize,
+                color: EqualistColors.lightGreen,
+              ),
+            ),
+            SizedBox(
+              height: EqualistColors.heightBtwBannerWords,
+            ),
+            Text(
+              "playlists",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.pressStart2p(
+                fontSize: EqualistColors.bannerFontSize,
+                color: EqualistColors.lightGreen,
+              ),
+            ),
+            SizedBox(
+              height: EqualistColors.heightBtwBannerWords,
+            ),
+            Text(
+              "instantly",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.pressStart2p(
+                fontSize: EqualistColors.bannerFontSize,
+                color: EqualistColors.lightGreen,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ButtonTheme(
+              minWidth: 200.0,
+              height: 100.0,
+              child: RaisedButton(
+                color: EqualistColors.lightGreen,
+                onPressed: _launchURL,
+                child: Text(
+                  "Login with Spotify",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.pressStart2p(
+                    fontSize: EqualistColors.bannerFontSize,
+                    color: EqualistColors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 19, 19, 19),
+      backgroundColor: EqualistColors.darkBackground,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,24 +125,22 @@ class _VerifyState extends State<Verify> {
             RichText(
               text: TextSpan(
                 text: "Equa",
-                style:
-                    GoogleFonts.pressStart2p(fontSize: 40, color: Colors.white),
+                style: GoogleFonts.pressStart2p(
+                    fontSize: 35, color: EqualistColors.white),
                 children: <TextSpan>[
                   TextSpan(
                       text: 'list',
                       style: GoogleFonts.pressStart2p(
-                          fontSize: 40,
-                          color: Color.fromARGB(215, 100, 215, 98))),
+                        fontSize: 35,
+                        color: EqualistColors.lightGreen,
+                      )),
                 ],
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 120,
             ),
-            RaisedButton(
-              onPressed: _launchURL,
-              child: Text("Login with Spotify"),
-            ),
+            inTheBox(),
           ],
         ),
       ),
