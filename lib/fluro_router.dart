@@ -1,3 +1,4 @@
+import 'package:equalist/loading.dart';
 import 'package:equalist/main.dart';
 import 'package:equalist/options.dart';
 import 'package:equalist/services.dart';
@@ -40,6 +41,15 @@ class FRouter {
     return WaitingRoom();
   });
 
+  static Handler _loadingHandler = Handler(
+      handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
+    //var code = params['code']?.first;
+    //var account = params['account']?.first;
+    //print(code);
+    // Use name and account values
+    return LoadingScreen();
+  });
+
   static Handler _optionsHandler = Handler(
       handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
     //var code = params['code']?.first;
@@ -54,5 +64,6 @@ class FRouter {
     router.define("verify", handler: _verifyHandler);
     router.define("waiting", handler: _waitingHandler);
     router.define("options", handler: _optionsHandler);
+    router.define("loading", handler: _loadingHandler);
   }
 }
