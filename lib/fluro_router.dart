@@ -33,9 +33,12 @@ class FRouter {
     String access_tok = parsed["access_token"];
     var auth_res;
     if (ref_token != null && access_tok != null) {
-      Map data = {"refresh_token": ref_token, "access_token": access_tok};
+      //Map data = {"refresh_token": ref_token, "access_token": access_tok};
+      Map<String, String> data;
+      data["refresh_token"] = ref_token;
+      data["access_token"] = access_tok;
       String endpoint = Services.apiUrl + "create-session/";
-      http.post(endpoint, body: data).then((response) {
+      http.post(endpoint, body: json.encode(data)).then((response) {
         print("Response status: ${response.statusCode}");
         print("Response body: ${response.body}");
         auth_res = json.decode(response.body);

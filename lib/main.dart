@@ -1,6 +1,8 @@
 import 'package:equalist/colors.dart';
 import 'package:equalist/fluro_router.dart';
+import 'package:equalist/login.dart';
 import 'package:equalist/services.dart';
+import 'package:equalist/waitingRoom.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,22 +62,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  verifyLogin() async {
-    bool login = await Services.checkLogin();
-    if (login) {
-      SharedPreferences prefs = await Services.sharedprefs();
-      print("From home");
-      print(prefs.getString("session_id"));
-      print(prefs.getString("url_key"));
-    } else {
-      print("no login");
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    verifyLogin();
+    //verifyLogin();
   }
 
   void _incrementCounter() {
@@ -91,6 +81,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    transfer(bool login) {
+      if (login) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => WaitingRoom()),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      }
+    }
+
+    verifyLogin() async {
+      bool login = await Services.checkLogin();
+      if (login) {
+        SharedPreferences prefs = await Services.sharedprefs();
+        print("From home");
+        print(prefs.getString("session_id"));
+        print(prefs.getString("url_key"));
+        transfer(true);
+      } else {
+        print("no login");
+        transfer(false);
+      }
+    }
+
+    verifyLogin();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
