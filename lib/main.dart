@@ -1,7 +1,9 @@
 import 'package:equalist/colors.dart';
 import 'package:equalist/fluro_router.dart';
+import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -57,6 +59,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  verifyLogin() async {
+    bool login = await Services.checkLogin();
+    if (login) {
+      SharedPreferences prefs = await Services.sharedprefs();
+      print("From home");
+      print(prefs.getString("session_id"));
+      print(prefs.getString("url_key"));
+    } else {
+      print("no login");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    verifyLogin();
+  }
 
   void _incrementCounter() {
     setState(() {

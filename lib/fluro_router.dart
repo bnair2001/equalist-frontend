@@ -9,13 +9,16 @@ import 'package:equalist/login.dart';
 import 'package:equalist/waitingRoom.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as mat;
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class FRouter {
   static final router = FluroRouter();
 
-  static void sendReq(var code, var state) async {
+  static sendReq(var code, var state) async {
+    EasyLoading.show(status: 'Signing you in..');
     var endpointUrl = 'https://calm-oasis-20606.herokuapp.com/callback';
     Map<String, String> queryParams = {'code': code, 'state': state};
     String queryString = Uri(queryParameters: queryParams).query;
@@ -28,16 +31,35 @@ class FRouter {
     print(parsed);
     String ref_token = parsed["refresh_token"];
     String access_tok = parsed["access_token"];
+    var auth_res;
     if (ref_token != null && access_tok != null) {
       Map data = {"refresh_token": ref_token, "access_token": access_tok};
       String endpoint = Services.apiUrl + "create-session/";
       http.post(endpoint, body: data).then((response) {
         print("Response status: ${response.statusCode}");
         print("Response body: ${response.body}");
+        auth_res = json.decode(response.body);
       });
     } else {
       print("null token recieved");
     }
+    final Map parsed_new = json.decode(auth_res);
+    if (parsed_new["session_id"] != null && parsed_new["url_key"] != null) {
+      SharedPreferences prefs = await Services.sharedprefs();
+      await prefs.setString("session_id", parsed_new["session_id"]);
+      await prefs.setString("url_key", parsed_new["url_key"]);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => SecondRoute()),
+      // );
+      return MyHomePage(
+        title: "Equalist",
+      );
+    } else {
+      print("Got null session and key");
+      print(auth_res);
+    }
+    EasyLoading.dismiss();
   }
 
   static Handler _homeHandler = Handler(
