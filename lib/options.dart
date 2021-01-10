@@ -138,7 +138,7 @@ class _OptionsPageState extends State<OptionsPage> {
             title: titleGen(key),
             value: values[key],
             onChanged: (bool value) {
-              Services.makeSound();
+              Services.makeSound(false);
               setState(() {
                 values[key] = value;
                 if (key == '"Fair and Square"') {

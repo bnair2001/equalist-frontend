@@ -1,4 +1,5 @@
 import 'package:equalist/colors.dart';
+import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,6 +36,15 @@ class _WaitingRoomState extends State<WaitingRoom> {
     'Ireland',
     'Italy',
   ];
+
+  startButton() async {
+    Services.makeSound(false);
+  }
+
+  refreshList() async {}
+
+  copyUrl() {}
+
   @override
   Widget build(BuildContext context) {
     //
@@ -64,9 +74,13 @@ class _WaitingRoomState extends State<WaitingRoom> {
                 ),
               ),
               Text('        '),
-              Icon(
-                Icons.copy,
-                color: EqualistColors.lightGreen,
+              IconButton(
+                icon: Icon(
+                  Icons.copy,
+                  color: EqualistColors.lightGreen,
+                ),
+                onPressed: copyUrl,
+                enableFeedback: true,
               ),
             ],
           ));
@@ -106,7 +120,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
       return Container(
         margin: const EdgeInsets.all(12.0),
         padding: const EdgeInsets.all(50.0),
-        height: 450.0,
+        height: 500.0,
         decoration: myBoxDecoration(), //       <--- BoxDecoration here
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -136,9 +150,13 @@ class _WaitingRoomState extends State<WaitingRoom> {
                   ),
                 ),
                 Text('    '),
-                Icon(
-                  Icons.refresh,
-                  color: EqualistColors.lightGreen,
+                IconButton(
+                  icon: Icon(
+                    Icons.refresh,
+                    color: EqualistColors.lightGreen,
+                  ),
+                  enableFeedback: true,
+                  onPressed: null,
                 ),
               ],
             ),
@@ -151,7 +169,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
               height: 50.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
-                onPressed: null,
+                onPressed: startButton,
                 child: Text(
                   "Press to Start",
                   textAlign: TextAlign.center,

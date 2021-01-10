@@ -1,4 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_audio/just_audio.dart';
+
+final player = AudioPlayer();
 
 class Services {
   static Future<SharedPreferences> sharedprefs() async {
@@ -6,7 +9,15 @@ class Services {
     return prefs;
   }
 
-  static void makeSound() async {}
+  static void makeSound(bool big) async {
+    if (big) {
+      await player.setUrl('https://equalist.tech/clickcut.mp3');
+    } else {
+      await player.setUrl('https://equalist.tech/clickcut.mp3');
+    }
+    //print(duration);
+    player.play();
+  }
 
   static Future<bool> checkLogin() async {
     SharedPreferences prefs = await sharedprefs();

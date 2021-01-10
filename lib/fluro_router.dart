@@ -1,3 +1,4 @@
+import 'package:equalist/finish.dart';
 import 'package:equalist/loading.dart';
 import 'package:equalist/main.dart';
 import 'package:equalist/options.dart';
@@ -59,11 +60,21 @@ class FRouter {
     return OptionsPage();
   });
 
+  static Handler _finishHandler = Handler(
+      handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
+    //var code = params['code']?.first;
+    //var account = params['account']?.first;
+    //print(code);
+    // Use name and account values
+    return FinishPage();
+  });
+
   static void setupRouter() {
     router.define("login", handler: _homeHandler);
     router.define("verify", handler: _verifyHandler);
     router.define("waiting", handler: _waitingHandler);
     router.define("options", handler: _optionsHandler);
     router.define("loading", handler: _loadingHandler);
+    router.define("finish", handler: _finishHandler);
   }
 }
