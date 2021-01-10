@@ -37,27 +37,32 @@ class FRouter {
       Map<String, String> data = {};
       data["refresh_token"] = ref_token;
       data["access_token"] = access_tok;
-      String endpoint = Services.apiUrl + "create-session/";
+      data["url_key"] = prefs.getString("homie_key");
+      String endpoint = Services.apiUrl + "add-homie/";
+      print(data);
       var response = await http.post(endpoint, body: json.encode(data));
+      print(response.statusCode);
+      print(response.body);
+      var res_homie = response.body;
+      Map parsed_new = json.decode(res_homie);
+      print(parsed_new);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomineAuth(
+                  status: true,
+                )),
+      );
     } else {
       if (ref_token != null && access_tok != null) {
         //Map data = {"refresh_token": ref_token, "access_token": access_tok};
         Map<String, String> data = {};
         data["refresh_token"] = ref_token;
         data["access_token"] = access_tok;
-        data["url_key"] = prefs.getString("homie_key");
+        // data["url_key"] = prefs.getString("homie_key");
         String endpoint = Services.apiUrl + "create-session/";
         var response = await http.post(endpoint, body: json.encode(data));
-        var res_homie = response.body;
-        Map parsed_new = json.decode(res_homie);
-        print(parsed_new);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomineAuth(
-                    status: true,
-                  )),
-        );
+        auth_res = response.body;
       } else {
         print("null token recieved");
       }
@@ -78,10 +83,14 @@ class FRouter {
     EasyLoading.dismiss();
   }
 
-  static void handleMyHomie(var key) async {
+  static void handleMyHomie(var key, mat.BuildContext context) async {
     SharedPreferences prefs = await Services.sharedprefs();
     prefs.setBool("homie", true);
     prefs.setString("homie_key", key);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   static Handler _homeHandler = Handler(
@@ -114,7 +123,7 @@ class FRouter {
       handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
     var key = params['key']?.first;
     if (key != null) {
-      handleMyHomie(key);
+      handleMyHomie(key, context);
     } else {
       Navigator.pushReplacement(
         context,

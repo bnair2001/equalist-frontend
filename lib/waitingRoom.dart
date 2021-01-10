@@ -178,7 +178,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
                     color: EqualistColors.white,
                   ),
                 ),
-                Text(' '),
+                // Text(' '),
                 IconButton(
                   icon: Icon(
                     Icons.refresh,

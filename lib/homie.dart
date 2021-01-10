@@ -1,6 +1,8 @@
 import 'package:equalist/colors.dart';
+import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomineAuth extends StatefulWidget {
   HomineAuth({Key key, this.status}) : super(key: key);
@@ -11,6 +13,11 @@ class HomineAuth extends StatefulWidget {
 }
 
 class _HomineAuthState extends State<HomineAuth> {
+  resetHomieStatus() async {
+    SharedPreferences pref = await Services.sharedprefs();
+    pref.setBool("homie", false);
+  }
+
   bool state = true;
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,9 @@ class _HomineAuthState extends State<HomineAuth> {
       setState(() {
         state = widget.status;
       });
+    }
+    if (state) {
+      resetHomieStatus();
     }
     return Scaffold(
       backgroundColor: EqualistColors.darkBackground,

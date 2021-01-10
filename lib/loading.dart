@@ -2,8 +2,9 @@ import 'package:equalist/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatefulWidget {
-  LoadingScreen({Key key}) : super(key: key);
+  LoadingScreen({Key key, this.reqBody}) : super(key: key);
 
+  final reqBody;
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
