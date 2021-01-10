@@ -6,6 +6,8 @@ class Services {
     return prefs;
   }
 
+  static void makeSound() async {}
+
   static Future<bool> checkLogin() async {
     SharedPreferences prefs = await sharedprefs();
     print(prefs.getString("ref_token"));

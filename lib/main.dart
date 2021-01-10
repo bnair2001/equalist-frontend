@@ -1,6 +1,7 @@
 import 'package:equalist/fluro_router.dart';
 import 'package:flutter/material.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   configureApp();
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Equalist',
       initialRoute: 'verify',
       onGenerateRoute: FRouter.router.generator,
+      builder: EasyLoading.init(),
       theme: ThemeData(
         // This is the theme of your application.
         //
