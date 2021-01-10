@@ -37,6 +37,7 @@ class FRouter {
       Map<String, String> data = {};
       data["refresh_token"] = ref_token;
       data["access_token"] = access_tok;
+
       data["url_key"] = prefs.getString("homie_key");
       String endpoint = Services.apiUrl + "add-homie/";
       print(data);
@@ -59,6 +60,8 @@ class FRouter {
         Map<String, String> data = {};
         data["refresh_token"] = ref_token;
         data["access_token"] = access_tok;
+        prefs.setString("refresh_token", ref_token);
+        prefs.setString("access_token", access_tok);
         // data["url_key"] = prefs.getString("homie_key");
         String endpoint = Services.apiUrl + "create-session/";
         var response = await http.post(endpoint, body: json.encode(data));

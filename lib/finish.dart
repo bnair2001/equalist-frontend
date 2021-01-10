@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FinishPage extends StatefulWidget {
-  FinishPage({Key key}) : super(key: key);
+  FinishPage({Key key, this.result}) : super(key: key);
 
+  final Map result;
   @override
   _FinishPageState createState() => _FinishPageState();
 }

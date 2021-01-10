@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:html';
 
 import 'package:equalist/colors.dart';
+import 'package:equalist/finish.dart';
+import 'package:equalist/loading.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OptionsPage extends StatefulWidget {
   OptionsPage({Key key}) : super(key: key);
@@ -82,6 +86,44 @@ class _OptionsPageState extends State<OptionsPage> {
         threeDecChungus = TextDecoration.underline;
       }
     });
+  }
+
+  void getReadyToCreate() async {
+    SharedPreferences pref = await Services.sharedprefs();
+    String refresh = pref.getString("refresh_token");
+    String access = pref.getString("access_token");
+    String sess_id = pref.getString("session_id");
+    bool recommend = values["recommendation"];
+    bool async_inv = false; //always false
+    bool share = values["share it to all"];
+    bool disable_seq = values["disable playlist sequencing"];
+    String size = "";
+    if (finalsize == 1) {
+      size = "small";
+    }
+    if (finalsize == 2) {
+      size = "medium";
+    }
+    if (finalsize == 3) {
+      size = "bigChungus";
+    }
+    Map<String, dynamic> data = {};
+    data["refresh_token"] = refresh;
+    data["access_token"] = access;
+    data["sess_id"] = sess_id;
+    data["recommendation"] = recommend;
+    data["async_invite"] = async_inv;
+    data["share_to_all"] = share;
+    data["disable_sequencing"] = disable_seq;
+    data["size"] = size;
+    var reqbody = json.encode(data);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) => LoadingScreen(
+                reqBody: reqbody,
+              )),
+    );
   }
 
   //
@@ -233,7 +275,9 @@ class _OptionsPageState extends State<OptionsPage> {
             height: 50.0,
             child: RaisedButton(
               color: EqualistColors.lightGreen,
-              onPressed: null,
+              onPressed: () {
+                getReadyToCreate();
+              },
               child: Text(
                 "Create Playlist",
                 textAlign: TextAlign.center,
