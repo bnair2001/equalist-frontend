@@ -2,6 +2,7 @@ import 'package:equalist/colors.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WaitingRoom extends StatefulWidget {
   WaitingRoom({Key key}) : super(key: key);
@@ -11,31 +12,25 @@ class WaitingRoom extends StatefulWidget {
 }
 
 class _WaitingRoomState extends State<WaitingRoom> {
-  var people = [
-    'Albania',
-    'Andorra',
-    'Armenia',
-    'Austria',
-    'Azerbaijan',
-    'Belarus',
-    'Belgium',
-    'Bosnia and Herzegovina',
-    'Bulgaria',
-    'Croatia',
-    'Cyprus',
-    'Czech Republic',
-    'Denmark',
-    'Estonia',
-    'Finland',
-    'France',
-    'Georgia',
-    'Germany',
-    'Greece',
-    'Hungary',
-    'Iceland',
-    'Ireland',
-    'Italy',
-  ];
+  String url = "Loading link ....";
+  var people = [];
+  String sess_id = "";
+  String url_key = "";
+  SharedPreferences prefs;
+  getUrlAndHomies() async {
+    prefs = await Services.sharedprefs();
+    setState(() {
+      sess_id = prefs.getString("session_id");
+      url_key = prefs.getString("url_key");
+      url = "https://equalist.tech/homie?key=" + url_key;
+    });
+    //get the homies
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   startButton() async {
     Services.makeSound(true);
@@ -72,7 +67,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Loding link...',
+                url,
                 style: GoogleFonts.quicksand(
                   color: EqualistColors.white,
                 ),

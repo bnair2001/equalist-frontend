@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:equalist/finish.dart';
 import 'package:equalist/loading.dart';
 import 'package:equalist/main.dart';
@@ -17,7 +16,7 @@ import 'package:http/http.dart' as http;
 class FRouter {
   static final router = FluroRouter();
 
-  static sendReq(var code, var state) async {
+  static sendReq(var code, var state, mat.BuildContext context) async {
     EasyLoading.show(status: 'Signing you in..');
     var endpointUrl = 'https://calm-oasis-20606.herokuapp.com/callback';
     Map<String, String> queryParams = {'code': code, 'state': state};
@@ -31,33 +30,40 @@ class FRouter {
     print(parsed);
     String ref_token = parsed["refresh_token"];
     String access_tok = parsed["access_token"];
+    SharedPreferences prefs = await Services.sharedprefs();
     var auth_res;
     if (ref_token != null && access_tok != null) {
       //Map data = {"refresh_token": ref_token, "access_token": access_tok};
-      Map<String, String> data;
+      Map<String, String> data = {};
       data["refresh_token"] = ref_token;
       data["access_token"] = access_tok;
       String endpoint = Services.apiUrl + "create-session/";
-      http.post(endpoint, body: json.encode(data)).then((response) {
-        print("Response status: ${response.statusCode}");
-        print("Response body: ${response.body}");
-        auth_res = json.decode(response.body);
-      });
+      var response = await http.post(endpoint, body: json.encode(data));
+      auth_res = response.body;
     } else {
       print("null token recieved");
     }
-    final Map parsed_new = json.decode(auth_res);
+    Map parsed_new = json.decode(auth_res);
+    print("Parsed 1");
+    print(parsed_new);
     if (parsed_new["session_id"] != null && parsed_new["url_key"] != null) {
-      SharedPreferences prefs = await Services.sharedprefs();
       await prefs.setString("session_id", parsed_new["session_id"]);
       await prefs.setString("url_key", parsed_new["url_key"]);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => SecondRoute()),
-      // );
-      return MyHomePage(
-        title: "Equalist",
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            title: "Equalist",
+          ),
+        ),
       );
+      // return MyHomePage(
+      //   title: "Equalist",
+      // );
+      // MyHomePage(
+      //   title: "Equalist",
+      // );
     } else {
       print("Got null session and key");
       print(auth_res);
@@ -71,7 +77,7 @@ class FRouter {
     var state = params['state']?.first;
     print(code);
     if (code != null && state != null) {
-      sendReq(code, state);
+      sendReq(code, state, context);
     } else {
       print("No state or code");
     }
