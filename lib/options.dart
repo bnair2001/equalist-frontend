@@ -16,8 +16,23 @@ class _OptionsPageState extends State<OptionsPage> {
       backgroundColor: EqualistColors.darkBackground,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Container(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  child: LinearProgressIndicator(
+                    value: 0.6,
+                    backgroundColor: EqualistColors.darkBackground,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        EqualistColors.lightGreen),
+                  ),
+                  height: 13.0,
+                  //width: 20.0,
+                )),
+            SizedBox(
+              height: 10,
+            ),
             RichText(
               text: TextSpan(
                 text: "Equa",
