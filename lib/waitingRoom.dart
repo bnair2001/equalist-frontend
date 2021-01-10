@@ -60,7 +60,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
 
   startButton(BuildContext context) {
     Services.makeSound(true);
-    if (people == null) {
+    if (people.length <= 0) {
       EasyLoading.showError('Wait for atleast one homie to join!');
     } else {
       FRouter.router.navigateTo(context, "/options");
@@ -208,7 +208,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
             ),
             _myListView(context),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             ButtonTheme(
               minWidth: 250.0,
