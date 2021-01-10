@@ -33,44 +33,55 @@ class FRouter {
     String access_tok = parsed["access_token"];
     SharedPreferences prefs = await Services.sharedprefs();
     var auth_res;
-    if (ref_token != null && access_tok != null) {
-      //Map data = {"refresh_token": ref_token, "access_token": access_tok};
+    if (prefs.getBool("homie")) {
       Map<String, String> data = {};
       data["refresh_token"] = ref_token;
       data["access_token"] = access_tok;
       String endpoint = Services.apiUrl + "create-session/";
       var response = await http.post(endpoint, body: json.encode(data));
-      auth_res = response.body;
     } else {
-      print("null token recieved");
-    }
-    Map parsed_new = json.decode(auth_res);
-    print("Parsed 1");
-    print(parsed_new);
-    if (parsed_new["session_id"] != null && parsed_new["url_key"] != null) {
-      await prefs.setString("session_id", parsed_new["session_id"]);
-      await prefs.setString("url_key", parsed_new["url_key"]);
+      if (ref_token != null && access_tok != null) {
+        //Map data = {"refresh_token": ref_token, "access_token": access_tok};
+        Map<String, String> data = {};
+        data["refresh_token"] = ref_token;
+        data["access_token"] = access_tok;
+        data["url_key"] = prefs.getString("homie_key");
+        String endpoint = Services.apiUrl + "create-session/";
+        var response = await http.post(endpoint, body: json.encode(data));
+        var res_homie = response.body;
+        Map parsed_new = json.decode(res_homie);
+        print(parsed_new);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomineAuth(
+                    status: true,
+                  )),
+        );
+      } else {
+        print("null token recieved");
+      }
+      Map parsed_new = json.decode(auth_res);
+      print("Parsed 1");
+      print(parsed_new);
+      if (parsed_new["session_id"] != null && parsed_new["url_key"] != null) {
+        await prefs.setString("session_id", parsed_new["session_id"]);
+        await prefs.setString("url_key", parsed_new["url_key"]);
 
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => MyHomePage(
-      //       title: "Equalist",
-      //     ),
-      //   ),
-      // );
-      router.navigateTo(context, "/waiting");
-      // return MyHomePage(
-      //   title: "Equalist",
-      // );
-      // MyHomePage(
-      //   title: "Equalist",
-      // );
-    } else {
-      print("Got null session and key");
-      print(auth_res);
+        router.navigateTo(context, "/waiting");
+      } else {
+        print("Got null session and key");
+        print(auth_res);
+      }
     }
+
     EasyLoading.dismiss();
+  }
+
+  static void handleMyHomie(var key) async {
+    SharedPreferences prefs = await Services.sharedprefs();
+    prefs.setBool("homie", true);
+    prefs.setString("homie_key", key);
   }
 
   static Handler _homeHandler = Handler(
@@ -102,6 +113,14 @@ class FRouter {
   static Handler _homieHandler = Handler(
       handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
     var key = params['key']?.first;
+    if (key != null) {
+      handleMyHomie(key);
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
     //var account = params['account']?.first;
     //print(code);
     // Use name and account values

@@ -183,25 +183,6 @@ class _OptionsPageState extends State<OptionsPage> {
           ),
           _myListView(context),
           SizedBox(
-            height: 20,
-          ),
-          ButtonTheme(
-            minWidth: 150.0,
-            height: 50.0,
-            child: RaisedButton(
-              color: EqualistColors.lightGreen,
-              onPressed: null,
-              child: Text(
-                "Create Playlist",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.pressStart2p(
-                  fontSize: EqualistColors.bannerFontSize,
-                  color: EqualistColors.white,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
             height: 13,
           ),
           Text(
@@ -243,7 +224,26 @@ class _OptionsPageState extends State<OptionsPage> {
                 child: Text("Big Chungus", style: threeSizes(3)),
               ),
             ],
-          )
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ButtonTheme(
+            minWidth: 150.0,
+            height: 50.0,
+            child: RaisedButton(
+              color: EqualistColors.lightGreen,
+              onPressed: null,
+              child: Text(
+                "Create Playlist",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.pressStart2p(
+                  fontSize: EqualistColors.bannerFontSize,
+                  color: EqualistColors.white,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

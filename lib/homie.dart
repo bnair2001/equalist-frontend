@@ -3,15 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomineAuth extends StatefulWidget {
-  HomineAuth({Key key}) : super(key: key);
+  HomineAuth({Key key, this.status}) : super(key: key);
 
+  final bool status;
   @override
   _HomineAuthState createState() => _HomineAuthState();
 }
 
 class _HomineAuthState extends State<HomineAuth> {
+  bool state = true;
   @override
   Widget build(BuildContext context) {
+    if (widget.status == null) {
+      setState(() {
+        state = false;
+      });
+    } else {
+      setState(() {
+        state = widget.status;
+      });
+    }
     return Scaffold(
       backgroundColor: EqualistColors.darkBackground,
       body: Center(
@@ -36,11 +47,17 @@ class _HomineAuthState extends State<HomineAuth> {
             SizedBox(
               height: 15.0,
             ),
-            Text(
-              "Please wait..",
-              style: GoogleFonts.pressStart2p(
-                  fontSize: 10, color: EqualistColors.white),
-            )
+            state
+                ? Text(
+                    "You were succesfully added to your friend's playlist",
+                    style: GoogleFonts.pressStart2p(
+                        fontSize: 10, color: EqualistColors.white),
+                  )
+                : Text(
+                    "Please wait..",
+                    style: GoogleFonts.pressStart2p(
+                        fontSize: 10, color: EqualistColors.white),
+                  ),
           ],
         ),
       ),
