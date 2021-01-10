@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:equalist/finish.dart';
+import 'package:equalist/homie.dart';
 import 'package:equalist/loading.dart';
 import 'package:equalist/main.dart';
 import 'package:equalist/options.dart';
@@ -58,7 +59,7 @@ class FRouter {
       //     ),
       //   ),
       // );
-      router.navigateTo(context, "/verify");
+      router.navigateTo(context, "/waiting");
       // return MyHomePage(
       //   title: "Equalist",
       // );
@@ -94,7 +95,17 @@ class FRouter {
     // Use name and account values
     return MyHomePage(
       title: "Equalist",
+      redirect: true,
     );
+  });
+
+  static Handler _homieHandler = Handler(
+      handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
+    var key = params['key']?.first;
+    //var account = params['account']?.first;
+    //print(code);
+    // Use name and account values
+    return HomineAuth();
   });
 
   static Handler _waitingHandler = Handler(
@@ -140,5 +151,6 @@ class FRouter {
     router.define("options", handler: _optionsHandler);
     router.define("loading", handler: _loadingHandler);
     router.define("finish", handler: _finishHandler);
+    router.define("homie", handler: _homieHandler);
   }
 }
