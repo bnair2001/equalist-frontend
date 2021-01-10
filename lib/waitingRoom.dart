@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:equalist/colors.dart';
@@ -50,6 +51,9 @@ class _WaitingRoomState extends State<WaitingRoom> {
   void initState() {
     count = 0;
     getUrlAndHomies();
+    const fiveSeconds = const Duration(seconds: 3);
+    // _fetchData() is your function to fetch data
+    Timer.periodic(fiveSeconds, (Timer t) => refreshList());
     super.initState();
   }
 

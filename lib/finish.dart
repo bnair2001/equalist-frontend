@@ -1,6 +1,8 @@
 import 'package:equalist/colors.dart';
+import 'package:equalist/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FinishPage extends StatefulWidget {
   FinishPage({Key key, this.result}) : super(key: key);
@@ -12,6 +14,10 @@ class FinishPage extends StatefulWidget {
 
 class _FinishPageState extends State<FinishPage> {
   //
+  String imgUrl = "https://pixian.netlify.app/images/seed3875236.png";
+  String playListName = "Loading Name...";
+  String playListURL = "";
+  //
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(
@@ -19,6 +25,25 @@ class _FinishPageState extends State<FinishPage> {
         color: EqualistColors.darkGreen,
       ),
     );
+  }
+
+  processData(var data) async {
+    print("final mission");
+    print(data);
+    setState(() {
+      imgUrl = data["playlist_cover"];
+      playListName = data["playlist_name"];
+      playListURL = data["playlist_url"];
+    });
+  }
+
+  _launchURL() async {
+    String url = playListURL;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Widget inTheBox() {
@@ -42,7 +67,7 @@ class _FinishPageState extends State<FinishPage> {
               ],
             ),
             child: Image.network(
-              "https://pixian.netlify.app/images/seed3875236.png",
+              imgUrl,
               width: 250,
               height: 250,
             ),
@@ -51,7 +76,7 @@ class _FinishPageState extends State<FinishPage> {
             height: 20,
           ),
           Text(
-            "*Cool Playlist Name*",
+            playListName,
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(
               fontSize: EqualistColors.bannerFontSize,
@@ -61,13 +86,21 @@ class _FinishPageState extends State<FinishPage> {
           SizedBox(
             height: 15,
           ),
-          Text(
-            "Start Over",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.pressStart2p(
-              fontSize: 12.0,
-              color: EqualistColors.lightGreen,
-              decoration: TextDecoration.underline,
+          new GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            child: new Text(
+              "Start Over",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.pressStart2p(
+                fontSize: 12.0,
+                color: EqualistColors.lightGreen,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
           SizedBox(
@@ -78,7 +111,9 @@ class _FinishPageState extends State<FinishPage> {
             height: 50.0,
             child: RaisedButton(
               color: EqualistColors.lightGreen,
-              onPressed: null,
+              onPressed: () {
+                _launchURL();
+              },
               child: Text(
                 "Play",
                 textAlign: TextAlign.center,
@@ -96,6 +131,8 @@ class _FinishPageState extends State<FinishPage> {
 
   @override
   Widget build(BuildContext context) {
+    var data = widget.result;
+    processData(data);
     return Scaffold(
       backgroundColor: EqualistColors.darkBackground,
       body: Center(
