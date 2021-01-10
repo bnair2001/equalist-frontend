@@ -50,14 +50,15 @@ class FRouter {
       await prefs.setString("session_id", parsed_new["session_id"]);
       await prefs.setString("url_key", parsed_new["url_key"]);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(
-            title: "Equalist",
-          ),
-        ),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => MyHomePage(
+      //       title: "Equalist",
+      //     ),
+      //   ),
+      // );
+      router.navigateTo(context, "/verify");
       // return MyHomePage(
       //   title: "Equalist",
       // );

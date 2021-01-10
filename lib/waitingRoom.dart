@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equalist/colors.dart';
+import 'package:equalist/fluro_router.dart';
 import 'package:equalist/options.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class WaitingRoom extends StatefulWidget {
 
 class _WaitingRoomState extends State<WaitingRoom> {
   String url = "Loading link ....";
+  int count = 0;
   var people = [];
   String sess_id = "";
   String url_key = "";
@@ -34,22 +36,26 @@ class _WaitingRoomState extends State<WaitingRoom> {
     Map valueMap = json.decode(response.body);
     print(valueMap);
     setState(() {
-      people = valueMap["homies"];
+      if (valueMap["homies"] != null) {
+        people = valueMap["homies"];
+      } else {
+        people = [
+          {"name": "No Homies yet"}
+        ];
+      }
     });
   }
 
   @override
   void initState() {
+    count = 0;
     getUrlAndHomies();
     super.initState();
   }
 
-  startButton(BuildContext context) async {
+  startButton(BuildContext context) {
     Services.makeSound(true);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => OptionsPage()),
-    );
+    FRouter.router.navigateTo(context, "/options");
   }
 
   refreshList() async {
@@ -192,7 +198,9 @@ class _WaitingRoomState extends State<WaitingRoom> {
               height: 50.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
-                onPressed: startButton(context),
+                onPressed: () {
+                  startButton(context);
+                },
                 child: Text(
                   "Press to Start",
                   textAlign: TextAlign.center,
