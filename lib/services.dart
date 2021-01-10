@@ -20,7 +20,7 @@ class Services {
   }
 
   static Future<bool> checkLogin() async {
-    SharedPreferences prefs = await sharedprefs();
+    SharedPreferences prefs = await sharedprefs(); //sessionid and keyURL
     print(prefs.getString("ref_token"));
     if (prefs.getString("ref_token") == null) {
       return false;

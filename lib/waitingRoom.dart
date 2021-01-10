@@ -38,12 +38,16 @@ class _WaitingRoomState extends State<WaitingRoom> {
   ];
 
   startButton() async {
+    Services.makeSound(true);
+  }
+
+  refreshList() async {
     Services.makeSound(false);
   }
 
-  refreshList() async {}
-
-  copyUrl() {}
+  copyUrl() {
+    Services.makeSound(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +160,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
                     color: EqualistColors.lightGreen,
                   ),
                   enableFeedback: true,
-                  onPressed: null,
+                  onPressed: refreshList,
                 ),
               ],
             ),
