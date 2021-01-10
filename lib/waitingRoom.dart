@@ -10,6 +10,31 @@ class WaitingRoom extends StatefulWidget {
 }
 
 class _WaitingRoomState extends State<WaitingRoom> {
+  var people = [
+    'Albania',
+    'Andorra',
+    'Armenia',
+    'Austria',
+    'Azerbaijan',
+    'Belarus',
+    'Belgium',
+    'Bosnia and Herzegovina',
+    'Bulgaria',
+    'Croatia',
+    'Cyprus',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Georgia',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Italy',
+  ];
   @override
   Widget build(BuildContext context) {
     //
@@ -27,7 +52,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
           margin: const EdgeInsets.all(30.0),
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-            border: Border.all(color: EqualistColors.lightGreen),
+            border: Border.all(color: EqualistColors.lightGreen, width: 4),
           ),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -44,6 +69,36 @@ class _WaitingRoomState extends State<WaitingRoom> {
                 color: EqualistColors.lightGreen,
               ),
             ],
+          ));
+    }
+
+    Widget _myListView(BuildContext context) {
+      return Container(
+          //margin: const EdgeInsets.all(20.0),
+          //padding: const EdgeInsets.all(5.0),
+          height: 120.0,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 4,
+              color: EqualistColors.lightGreen,
+            ),
+          ), //       <--- BoxDecoration here
+          child: ListView.builder(
+            itemCount: people.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.only(top: 0.0, bottom: 0.0),
+                title: Text(
+                  people[index],
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.pressStart2p(
+                    fontSize: 15.0,
+                    color: EqualistColors.white,
+                  ),
+                ),
+              );
+            },
           ));
     }
 
@@ -68,9 +123,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
             //   height: 2.0,
             // ),
             copyLink(),
-            SizedBox(
-              height: 20,
-            ),
+
             Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
@@ -82,17 +135,20 @@ class _WaitingRoomState extends State<WaitingRoom> {
                     color: EqualistColors.white,
                   ),
                 ),
-                Text('                  '),
+                Text('    '),
                 Icon(
                   Icons.refresh,
                   color: EqualistColors.lightGreen,
                 ),
               ],
             ),
-
+            _myListView(context),
+            SizedBox(
+              height: 20,
+            ),
             ButtonTheme(
-              minWidth: 200.0,
-              height: 100.0,
+              minWidth: 150.0,
+              height: 50.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
                 onPressed: null,
