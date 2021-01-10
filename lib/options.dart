@@ -6,6 +6,7 @@ import 'package:equalist/finish.dart';
 import 'package:equalist/loading.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +21,7 @@ class _OptionsPageState extends State<OptionsPage> {
   Map<String, bool> values = {
     'recommendation': false,
     'asynchronous invite': true,
-    '"Fair and Square"': false,
+    // '"Fair and Square"': false,
     'share it to all': false,
     'disable playlist sequencing': false
   };
@@ -107,23 +108,27 @@ class _OptionsPageState extends State<OptionsPage> {
     if (finalsize == 3) {
       size = "bigChungus";
     }
-    Map<String, dynamic> data = {};
-    data["refresh_token"] = refresh;
-    data["access_token"] = access;
-    data["sess_id"] = sess_id;
-    data["recommendation"] = recommend;
-    data["async_invite"] = async_inv;
-    data["share_to_all"] = share;
-    data["disable_sequencing"] = disable_seq;
-    data["size"] = size;
-    var reqbody = json.encode(data);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => LoadingScreen(
-                reqBody: reqbody,
-              )),
-    );
+    if (finalsize == 0) {
+      EasyLoading.showError('Please select a size!');
+    } else {
+      Map<String, dynamic> data = {};
+      data["refresh_token"] = refresh;
+      data["access_token"] = access;
+      data["sess_id"] = sess_id;
+      data["recommendation"] = recommend;
+      data["async_invite"] = async_inv;
+      data["share_to_all"] = share;
+      data["disable_sequencing"] = disable_seq;
+      data["size"] = size;
+      var reqbody = json.encode(data);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoadingScreen(
+                  reqBody: reqbody,
+                )),
+      );
+    }
   }
 
   //
@@ -183,18 +188,18 @@ class _OptionsPageState extends State<OptionsPage> {
               Services.makeSound(false);
               setState(() {
                 values[key] = value;
-                if (key == '"Fair and Square"') {
-                  values["share it to all"] = value;
-                  values["disable playlist sequencing"] = value;
-                }
-                if (values["share it to all"] &&
-                    values["disable playlist sequencing"]) {
-                  values['"Fair and Square"'] = true;
-                }
-                if (!values["share it to all"] &&
-                    !values["disable playlist sequencing"]) {
-                  values['"Fair and Square"'] = false;
-                }
+                // if (key == '"Fair and Square"') {
+                //   values["share it to all"] = value;
+                //   values["disable playlist sequencing"] = value;
+                // }
+                // if (values["share it to all"] &&
+                //     values["disable playlist sequencing"]) {
+                //   values['"Fair and Square"'] = true;
+                // }
+                // if (!values["share it to all"] &&
+                //     !values["disable playlist sequencing"]) {
+                //   values['"Fair and Square"'] = false;
+                // }
               });
             },
           );
@@ -205,34 +210,39 @@ class _OptionsPageState extends State<OptionsPage> {
 
   Widget inTheBox() {
     return Container(
-      margin: const EdgeInsets.all(10.0),
-      padding: const EdgeInsets.all(30.0),
+      // margin: const EdgeInsets.all(10.0),
+      // padding: const EdgeInsets.all(30.0),
+      margin: const EdgeInsets.fromLTRB(20, 5, 20, 12),
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       height: 500.0,
       decoration: myBoxDecoration(), //       <--- BoxDecoration here
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          SizedBox(
+            height: 15,
+          ),
           Text(
             "Options:",
             textAlign: TextAlign.center,
             style: GoogleFonts.pressStart2p(
               fontSize: 20,
-              color: EqualistColors.darkGreen,
+              color: EqualistColors.lightGreen,
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           _myListView(context),
           SizedBox(
-            height: 13,
+            height: 2,
           ),
           Text(
             "Size:",
             textAlign: TextAlign.center,
             style: GoogleFonts.pressStart2p(
               fontSize: 15,
-              color: EqualistColors.darkGreen,
+              color: EqualistColors.lightGreen,
             ),
           ),
           SizedBox(
@@ -268,11 +278,11 @@ class _OptionsPageState extends State<OptionsPage> {
             ],
           ),
           SizedBox(
-            height: 10,
+            height: 23,
           ),
           ButtonTheme(
-            minWidth: 150.0,
-            height: 50.0,
+            minWidth: 300.0,
+            height: 120.0,
             child: RaisedButton(
               color: EqualistColors.lightGreen,
               onPressed: () {
@@ -282,7 +292,7 @@ class _OptionsPageState extends State<OptionsPage> {
                 "Create Playlist",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.pressStart2p(
-                  fontSize: EqualistColors.bannerFontSize,
+                  fontSize: 15.0,
                   color: EqualistColors.white,
                 ),
               ),
@@ -310,11 +320,11 @@ class _OptionsPageState extends State<OptionsPage> {
                     valueColor: AlwaysStoppedAnimation<Color>(
                         EqualistColors.lightGreen),
                   ),
-                  height: 13.0,
+                  height: 10.0,
                   //width: 20.0,
                 )),
             SizedBox(
-              height: 10,
+              height: 15,
             ),
             RichText(
               text: TextSpan(
@@ -332,7 +342,7 @@ class _OptionsPageState extends State<OptionsPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 55,
             ),
             inTheBox(),
           ],

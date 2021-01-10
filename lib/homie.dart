@@ -60,11 +60,13 @@ class _HomineAuthState extends State<HomineAuth> {
             state
                 ? Text(
                     "You were succesfully added to your friend's playlist",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.pressStart2p(
                         fontSize: 10, color: EqualistColors.white),
                   )
                 : Text(
                     "Please wait..",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.pressStart2p(
                         fontSize: 10, color: EqualistColors.white),
                   ),

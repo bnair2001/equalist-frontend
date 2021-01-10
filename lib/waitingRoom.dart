@@ -6,6 +6,7 @@ import 'package:equalist/fluro_router.dart';
 import 'package:equalist/options.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -59,11 +60,15 @@ class _WaitingRoomState extends State<WaitingRoom> {
 
   startButton(BuildContext context) {
     Services.makeSound(true);
-    FRouter.router.navigateTo(context, "/options");
+    if (people == null) {
+      EasyLoading.showError('Wait for atleast one homie to join!');
+    } else {
+      FRouter.router.navigateTo(context, "/options");
+    }
   }
 
   refreshList() async {
-    Services.makeSound(false);
+    //Services.makeSound(false);
     //get the homies
     var response = await http.get(Services.apiUrl + "get-homies/" + sess_id);
     Map valueMap = json.decode(response.body);
@@ -92,8 +97,9 @@ class _WaitingRoomState extends State<WaitingRoom> {
 
     Widget copyLink() {
       return Container(
-          margin: const EdgeInsets.all(30.0),
-          padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+          width: 250,
           decoration: BoxDecoration(
             border: Border.all(color: EqualistColors.lightGreen, width: 4),
           ),
@@ -102,12 +108,14 @@ class _WaitingRoomState extends State<WaitingRoom> {
             children: [
               Text(
                 url,
+                textAlign: TextAlign.center,
                 style: GoogleFonts.quicksand(
                   color: EqualistColors.white,
                 ),
               ),
-              Text('        '),
+              Text('                        '),
               IconButton(
+                alignment: Alignment.centerRight,
                 icon: Icon(
                   Icons.copy,
                   color: EqualistColors.lightGreen,
@@ -121,9 +129,10 @@ class _WaitingRoomState extends State<WaitingRoom> {
 
     Widget _myListView(BuildContext context) {
       return Container(
-          //margin: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
           //padding: const EdgeInsets.all(5.0),
-          height: 120.0,
+          height: 180.0,
+          width: 250,
           decoration: BoxDecoration(
             border: Border.all(
               width: 4,
@@ -151,13 +160,18 @@ class _WaitingRoomState extends State<WaitingRoom> {
 
     Widget inTheBox() {
       return Container(
-        margin: const EdgeInsets.all(12.0),
-        padding: const EdgeInsets.all(50.0),
+        // margin: const EdgeInsets.all(12.0),
+        // padding: const EdgeInsets.all(50.0),
+        margin: const EdgeInsets.fromLTRB(20, 5, 20, 12),
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         height: 500.0,
         decoration: myBoxDecoration(), //       <--- BoxDecoration here
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(
+              height: 20.0,
+            ),
             Text(
               "Invite your homies",
               textAlign: TextAlign.center,
@@ -166,11 +180,10 @@ class _WaitingRoomState extends State<WaitingRoom> {
                 color: EqualistColors.white,
               ),
             ),
-            // SizedBox(
-            //   height: 2.0,
-            // ),
+            SizedBox(
+              height: 2.0,
+            ),
             copyLink(),
-
             Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
@@ -195,11 +208,11 @@ class _WaitingRoomState extends State<WaitingRoom> {
             ),
             _myListView(context),
             SizedBox(
-              height: 20,
+              height: 50,
             ),
             ButtonTheme(
-              minWidth: 150.0,
-              height: 50.0,
+              minWidth: 250.0,
+              height: 120.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
                 onPressed: () {
@@ -209,7 +222,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
                   "Press to Start",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.pressStart2p(
-                    fontSize: EqualistColors.bannerFontSize,
+                    fontSize: 15.0,
                     color: EqualistColors.white,
                   ),
                 ),
@@ -235,7 +248,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
                     valueColor: AlwaysStoppedAnimation<Color>(
                         EqualistColors.lightGreen),
                   ),
-                  height: 13.0,
+                  height: 10.0,
                   //width: 20.0,
                 )),
             SizedBox(

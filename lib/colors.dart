@@ -6,6 +6,6 @@ class EqualistColors {
   static final darkGreen = Color.fromARGB(255, 46, 107, 53);
   static final darkBackground = Color.fromARGB(255, 19, 19, 19);
   //
-  static final bannerFontSize = 15.5;
+  static final bannerFontSize = 25.0;
   static final heightBtwBannerWords = 8.0;
 }

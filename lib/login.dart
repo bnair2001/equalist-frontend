@@ -45,18 +45,22 @@ class _LoginPageState extends State<LoginPage> {
 
     Widget inTheBox() {
       return Container(
-        margin: const EdgeInsets.all(8.0),
-        padding: const EdgeInsets.all(70.0),
-        height: 450.0,
+        margin: const EdgeInsets.fromLTRB(20, 5, 20, 12),
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        height: 500.0,
         decoration: myBoxDecoration(), //       <--- BoxDecoration here
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(
+              height: 30,
+            ),
             Text(
               "Create",
               textAlign: TextAlign.center,
               style: GoogleFonts.pressStart2p(
                 fontSize: EqualistColors.bannerFontSize,
+                //fontSize: 30,
                 color: EqualistColors.lightGreen,
               ),
             ),
@@ -94,11 +98,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 180,
             ),
             ButtonTheme(
               minWidth: 200.0,
-              height: 100.0,
+              height: 120.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
                 onPressed: _launchURL,
@@ -106,7 +110,8 @@ class _LoginPageState extends State<LoginPage> {
                   "Login with Spotify",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.pressStart2p(
-                    fontSize: EqualistColors.bannerFontSize,
+                    //fontSize: EqualistColors.bannerFontSize,
+                    fontSize: 20,
                     color: EqualistColors.white,
                   ),
                 ),
@@ -139,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 90,
+              height: 50,
             ),
             inTheBox(),
           ],

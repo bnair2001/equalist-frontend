@@ -48,9 +48,9 @@ class _FinishPageState extends State<FinishPage> {
 
   Widget inTheBox() {
     return Container(
-      margin: const EdgeInsets.all(12.0),
+      margin: const EdgeInsets.all(20.0),
       padding: const EdgeInsets.all(50.0),
-      height: 500.0,
+      height: 590.0,
       decoration: myBoxDecoration(), //       <--- BoxDecoration here
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +84,7 @@ class _FinishPageState extends State<FinishPage> {
             ),
           ),
           SizedBox(
-            height: 15,
+            height: 30,
           ),
           new GestureDetector(
             onTap: () {
@@ -107,8 +107,8 @@ class _FinishPageState extends State<FinishPage> {
             height: 25,
           ),
           ButtonTheme(
-            minWidth: 110.0,
-            height: 50.0,
+            minWidth: 300.0,
+            height: 120.0,
             child: RaisedButton(
               color: EqualistColors.lightGreen,
               onPressed: () {
@@ -118,7 +118,7 @@ class _FinishPageState extends State<FinishPage> {
                 "Play",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.pressStart2p(
-                  fontSize: EqualistColors.bannerFontSize,
+                  fontSize: 15.0,
                   color: EqualistColors.white,
                 ),
               ),
