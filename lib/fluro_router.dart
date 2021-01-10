@@ -1,6 +1,7 @@
 import 'package:equalist/main.dart';
 import 'package:equalist/services.dart';
-import 'package:equalist/verify.dart';
+import 'package:equalist/login.dart';
+import 'package:equalist/waitingRoom.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,9 +16,7 @@ class FRouter {
     print(code);
 
     // Use name and account values
-    return MyHomePage(
-      title: "Equalist",
-    );
+    return LoginPage();
   });
 
   static Handler _verifyHandler = Handler(
@@ -26,11 +25,23 @@ class FRouter {
     //var account = params['account']?.first;
     //print(code);
     // Use name and account values
-    return Verify();
+    return MyHomePage(
+      title: "Equalist",
+    );
+  });
+
+  static Handler _waitingHandler = Handler(
+      handlerFunc: (mat.BuildContext context, Map<String, dynamic> params) {
+    //var code = params['code']?.first;
+    //var account = params['account']?.first;
+    //print(code);
+    // Use name and account values
+    return WaitingRoom();
   });
 
   static void setupRouter() {
     router.define("login", handler: _homeHandler);
     router.define("verify", handler: _verifyHandler);
+    router.define("waiting", handler: _waitingHandler);
   }
 }

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Verify extends StatefulWidget {
-  Verify({Key key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  LoginPage({Key key}) : super(key: key);
 
   @override
-  _VerifyState createState() => _VerifyState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _VerifyState extends State<Verify> {
+class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
@@ -47,6 +47,7 @@ class _VerifyState extends State<Verify> {
       return Container(
         margin: const EdgeInsets.all(8.0),
         padding: const EdgeInsets.all(70.0),
+        height: 450.0,
         decoration: myBoxDecoration(), //       <--- BoxDecoration here
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +139,7 @@ class _VerifyState extends State<Verify> {
               ),
             ),
             SizedBox(
-              height: 120,
+              height: 90,
             ),
             inTheBox(),
           ],
