@@ -220,7 +220,7 @@ class _OptionsPageState extends State<OptionsPage> {
             children: [
               FlatButton(
                 color: Colors.transparent,
-                splashColor: Colors.black26,
+                splashColor: EqualistColors.darkBackground,
                 onPressed: () {
                   setSize(1);
                 },
@@ -228,17 +228,17 @@ class _OptionsPageState extends State<OptionsPage> {
               ),
               FlatButton(
                 color: Colors.transparent,
-                splashColor: Colors.black26,
+                splashColor: EqualistColors.darkBackground,
                 onPressed: () {
-                  setSize(1);
+                  setSize(2);
                 },
                 child: Text("Medium", style: threeSizes(2)),
               ),
               FlatButton(
                 color: Colors.transparent,
-                splashColor: Colors.black26,
+                splashColor: EqualistColors.darkBackground,
                 onPressed: () {
-                  setSize(1);
+                  setSize(3);
                 },
                 child: Text("Big Chungus", style: threeSizes(3)),
               ),
