@@ -50,7 +50,7 @@ class FRouter {
       await prefs.setString("session_id", parsed_new["session_id"]);
       await prefs.setString("url_key", parsed_new["url_key"]);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => MyHomePage(

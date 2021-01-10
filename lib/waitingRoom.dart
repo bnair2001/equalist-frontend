@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:equalist/colors.dart';
+import 'package:equalist/options.dart';
 import 'package:equalist/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:clippy/browser.dart' as clippy;
 
 class WaitingRoom extends StatefulWidget {
   WaitingRoom({Key key}) : super(key: key);
@@ -25,23 +30,42 @@ class _WaitingRoomState extends State<WaitingRoom> {
       url = "https://equalist.tech/homie?key=" + url_key;
     });
     //get the homies
+    var response = await http.get(Services.apiUrl + "get-homies/" + sess_id);
+    Map valueMap = json.decode(response.body);
+    print(valueMap);
+    setState(() {
+      people = valueMap["homies"];
+    });
   }
 
   @override
   void initState() {
+    getUrlAndHomies();
     super.initState();
   }
 
-  startButton() async {
+  startButton(BuildContext context) async {
     Services.makeSound(true);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => OptionsPage()),
+    );
   }
 
   refreshList() async {
     Services.makeSound(false);
+    //get the homies
+    var response = await http.get(Services.apiUrl + "get-homies/" + sess_id);
+    Map valueMap = json.decode(response.body);
+    print(valueMap);
+    setState(() {
+      people = valueMap["homies"];
+    });
   }
 
-  copyUrl() {
+  copyUrl() async {
     Services.makeSound(false);
+    await clippy.write(url);
   }
 
   @override
@@ -103,7 +127,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
                 dense: true,
                 contentPadding: EdgeInsets.only(top: 0.0, bottom: 0.0),
                 title: Text(
-                  people[index],
+                  people[index]["name"],
                   textAlign: TextAlign.center,
                   style: GoogleFonts.pressStart2p(
                     fontSize: 15.0,
@@ -168,7 +192,7 @@ class _WaitingRoomState extends State<WaitingRoom> {
               height: 50.0,
               child: RaisedButton(
                 color: EqualistColors.lightGreen,
-                onPressed: startButton,
+                onPressed: startButton(context),
                 child: Text(
                   "Press to Start",
                   textAlign: TextAlign.center,
