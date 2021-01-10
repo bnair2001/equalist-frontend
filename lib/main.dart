@@ -1,5 +1,7 @@
+import 'package:equalist/colors.dart';
 import 'package:equalist/fluro_router.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -76,11 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      backgroundColor: EqualistColors.darkBackground,
+      // appBar: AppBar(
+      //   // Here we take the value from the MyHomePage object that was created by
+      //   // the App.build method, and use it to set our appbar title.
+      //   title: Text(widget.title),
+      // ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -101,21 +104,32 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            RichText(
+              text: TextSpan(
+                text: "Equa",
+                style: GoogleFonts.pressStart2p(
+                    fontSize: 35, color: EqualistColors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'list',
+                      style: GoogleFonts.pressStart2p(
+                        fontSize: 35,
+                        color: EqualistColors.lightGreen,
+                      )),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+              "Please wait..",
+              style: GoogleFonts.pressStart2p(
+                  fontSize: 10, color: EqualistColors.white),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

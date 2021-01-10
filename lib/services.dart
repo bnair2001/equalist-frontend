@@ -4,6 +4,9 @@ import 'package:just_audio/just_audio.dart';
 final player = AudioPlayer();
 
 class Services {
+//
+  static String apiUrl = "https://gentle-tundra-54707.herokuapp.com/";
+//
   static Future<SharedPreferences> sharedprefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs;
